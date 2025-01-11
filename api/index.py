@@ -1,3 +1,9 @@
+import requests
+import re
+import os
+import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
 def get_data(neo_type, neo_category):
     if neo_type not in ['wishlist', 'progress', 'complete']:
         raise ValueError('Invalid type parameter. Must be wishlist, progress, or complete')
