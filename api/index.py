@@ -23,3 +23,21 @@ def get_data(neo_type, neo_category):
             item['cover_image_url'] = item['cover_image_url'].replace('https://neodb.social', 'https://neodb.prvcy.page')
     
     return all_results
+
+class Handler(BaseHTTPRequestHandler): 
+    def do_GET(self):
+        path = self.path
+        neo_type = re.findall(r'type=([^&]*)', path)[0]
+        neo_category = re.findall(r'category=([^&]*)', path)[0]
+        try:    
+            data = get_data(neo_type, neo_category) 
+        except Exception as e:  
+            self.send_error(500, str(e))
+            return
+       
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Content-type', 'application/json; charset=utf-8')
+        self.end_headers()
+        self.wfile.write(json.dumps(data, ensure_ascii=False).encode('utf-8'))
+        return
