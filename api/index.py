@@ -25,8 +25,10 @@ def get_data(neo_type, neo_category):
     
     # 替换 cover_image_url 中的域名
     for item in all_results:
-        if 'cover_image_url' in item:
-            item['cover_image_url'] = item['cover_image_url'].replace('https://neodb.social', 'https://neodb.prvcy.page')
+        if 'item' in item and 'cover_image_url' in item['item']:
+            item['item']['cover_image_url'] = item['item']['cover_image_url'].replace(
+                'https://neodb.social', 'https://neodb.prvcy.page'
+            )
     
     return all_results
 
